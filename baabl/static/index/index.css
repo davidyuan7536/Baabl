@@ -1,0 +1,797 @@
+*, *:before, *:after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  font-size: 62.5%;
+  height: 100%;
+  overflow: hidden;
+}
+@media (max-width: 768px) {
+  html, body {
+    font-size: 40%;
+  }
+}
+
+svg {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  overflow: visible;
+}
+
+.svg-icon {
+  cursor: pointer;
+}
+.svg-icon path {
+  stroke: rgba(255, 255, 255, 0.9);
+  fill: none;
+  stroke-width: 1;
+}
+
+input, button {
+  outline: none;
+  border: none;
+}
+
+.cont {
+  position: relative;
+  height: 100%;
+  background-image: url("../../images/3.jpg");
+  background-size: cover;
+  overflow: auto;
+  font-family: "Open Sans", Helvetica, Arial, sans-serif;
+}
+
+.form_cont {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -15rem;
+  margin-top: -26.5rem;
+  width: 30rem;
+  height: 55rem;
+  overflow: hidden;
+}
+
+.transition{
+  z-index: 3;
+  position: relative;
+  height: 100%;
+  background-color: #424242;
+  top: -55rem;
+  display: none;
+}
+
+
+
+.login {
+  z-index: 2;
+  position: relative;
+  height: 100%;
+  background-color: #424242;
+}
+
+.logo{
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background-image: url("../../images/1.jpg");
+  background-size: cover;
+  overflow: auto;
+  text-align: center;
+
+}
+.logo span{
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  font-size: 2em;
+
+}
+
+#logo_name{
+  display:inline;
+  text-decoration: none;
+  z-index: 1;
+  background-color: white;
+  color: #FF3366;
+  line-height: 30px;
+  padding: 7px 14px;
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 2em;
+  transition: all 0.3s ease;
+  cursor:default;
+}
+
+
+.login_form {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 30%;
+  padding: 1.5rem 2.5rem;
+  text-align: center;
+}
+
+.login_bottom{
+
+  position: absolute;
+  top: 70%;
+  left: 0;
+  width: 100%;
+  height: 20%;
+  padding: 1.5rem 2.5rem;
+  text-align: center;
+
+}
+
+.signup_form {
+  position: absolute;
+  top: 20%;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  padding: 1.5rem 2.5rem;
+  text-align: center;
+}
+
+
+.login_row {
+  height: 5rem;
+  padding-top: 1rem;
+  border-bottom: 1px solid #FF3366;
+}
+
+
+#forgot_confirmation_code {
+  opacity: 0;
+  visibility: hidden;
+  -webkit-transition: visibility 0s, opacity 0.5s ease;
+  -moz-transition: visibility 0s, opacity 0.5s ease;
+  -o-transition: visibility 0s, opacity 0.5s ease;
+  -ms-transition: visibility 0s, opacity 0.5s ease;
+
+}
+
+#forgot_reset{
+  opacity: 0;
+  visibility: hidden;
+  -webkit-transition: visibility 0s, opacity 0.5s ease;
+  -moz-transition: visibility 0s, opacity 0.5s ease;
+  -o-transition: visibility 0s, opacity 0.5s ease;
+  -ms-transition: visibility 0s, opacity 0.5s ease;
+}
+
+#forgot_reset_confirm{
+  opacity: 0;
+  visibility: hidden;
+  -webkit-transition: visibility 0s, opacity 0.5s ease;
+  -moz-transition: visibility 0s, opacity 0.5s ease;
+  -o-transition: visibility 0s, opacity 0.5s ease;
+  -ms-transition: visibility 0s, opacity 0.5s ease;
+}
+
+.login_input {
+  display: inline-block;
+  width: 22rem;
+  height: 100%;
+  padding-left: 1.5rem;
+  font-size: 1.5rem;
+  background: transparent;
+  color: #FDFCFD;
+}
+
+.signup_input {
+  display: inline-block;
+  width: 22rem;
+  height: 100%;
+  font-size: 1.5rem;
+  background: transparent;
+  color: #FDFCFD;
+}
+
+#login_email_icon{
+  font-size: 1em;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+
+}
+
+#login_email_icon.active{
+  font-size: 1.2em;
+}
+
+#login_password_icon{
+  font-size: 1em;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+
+}
+
+#login_password_icon.active{
+  font-size: 1.2em;
+}
+
+
+paper-ripple {
+  color: #FF3366;
+}
+
+.submit {
+  position: relative;
+  width: 100%;
+  height: 4rem;
+  margin: 2rem 0 1.5rem;
+  color: rgba(255, 255, 255, 0.8);
+  background: #FF3366;
+  font-size: 1.5rem;
+  border-radius: 3rem;
+  cursor: pointer;
+  overflow: hidden;
+  -webkit-transition: width 0.3s 0.15s, font-size 0.1s 0.15s;
+          transition: width 0.3s 0.15s, font-size 0.1s 0.15s;
+}
+
+.submit:hover {
+  background-color: #FF295E;
+}
+
+.submit:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -1.5rem;
+  margin-top: -1.5rem;
+  width: 3rem;
+  height: 3rem;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  border-left: none;
+  border-bottom: none;
+  -webkit-transition: opacity 0.1s 0.4s;
+          transition: opacity 0.1s 0.4s;
+  opacity: 0;
+}
+
+.submit.processing {
+  width: 10rem;
+  font-size: 0;
+}
+.submit.processing:after {
+  opacity: 1;
+  -webkit-animation: rotate 0.5s 0.4s infinite linear;
+          animation: rotate 0.5s 0.4s infinite linear;
+}
+
+.submit.success {
+  -webkit-transition: -webkit-transform 0.3s 0.1s ease-out, opacity 0.1s 0.3s, background-color 0.1s 0.3s;
+          transition: transform 0.3s 0.1s ease-out, opacity 0.1s 0.3s, background-color 0.1s 0.3s;
+  -webkit-transform: scale(30);
+      -ms-transform: scale(30);
+          transform: scale(30);
+  opacity: 0.9;
+}
+.submit.success:after {
+  -webkit-transition: opacity 0.1s 0s;
+          transition: opacity 0.1s 0s;
+  opacity: 0;
+  -webkit-animation: none;
+          animation: none;
+}
+
+.login_signup {
+  font-size: 1.2rem;
+  color: #ABA8AE;
+}
+
+.login_signup a {
+  color: #fff;
+  cursor: pointer;
+
+}
+
+.login_signup a:hover {
+  color: #FF3366;
+  text-decoration: none;
+}
+
+.signup{
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  background-color: #424242;
+  -webkit-transition: opacity 0.1s, -webkit-transform 0.3s cubic-bezier(0.68, -0.45, 0.465, 1.25);
+          transition: opacity 0.1s, transform 0.3s cubic-bezier(0.68, -0.45, 0.465, 1.25);
+  -webkit-transform: scale(1.2);
+      -ms-transform: scale(1.2);
+          transform: scale(1.2);
+}
+
+.signup.active {
+  opacity: 1;
+  -webkit-transform: scale(1);
+      -ms-transform: scale(1);
+          transform: scale(1);
+}
+
+
+.signup_head {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 20%;
+  background-image: url("../../images/1.jpg");
+  background-size: cover;
+  overflow: auto;
+  padding-top: 3rem;
+  text-align: center;
+}
+
+.signup_text{
+  display:inline;
+  text-decoration: none;
+  background-color: white;
+  color: #FF3366;
+  line-height: 30px;
+  padding: 7px 14px;
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 2em;
+  transition: all 0.3s ease;
+  cursor:default;
+
+}
+
+
+
+.forgot{
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  background-color: #424242;
+  -webkit-transition: opacity 0.1s, -webkit-transform 0.3s cubic-bezier(0.68, -0.45, 0.465, 1.25);
+          transition: opacity 0.1s, transform 0.3s cubic-bezier(0.68, -0.45, 0.465, 1.25);
+  -webkit-transform: scale(1.2);
+      -ms-transform: scale(1.2);
+          transform: scale(1.2);
+
+}
+
+.forgot.active {
+  opacity: 1;
+  -webkit-transform: scale(1);
+      -ms-transform: scale(1);
+          transform: scale(1);
+}
+
+.forgot_text{
+  text-align: left;
+  color: #fff;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+
+}
+
+.app {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  display: none;
+  -webkit-transition: opacity 0.1s, -webkit-transform 0.3s cubic-bezier(0.68, -0.45, 0.465, 1.25);
+          transition: opacity 0.1s, transform 0.3s cubic-bezier(0.68, -0.45, 0.465, 1.25);
+  -webkit-transform: scale(1.2);
+      -ms-transform: scale(1.2);
+          transform: scale(1.2);
+}
+.app.active {
+  opacity: 1;
+  -webkit-transform: scale(1);
+      -ms-transform: scale(1);
+          transform: scale(1);
+}
+
+.app.active .app_user-photo {
+  -webkit-transform: scale(1);
+      -ms-transform: scale(1);
+          transform: scale(1);
+}
+.app.active .app_meeting {
+  -webkit-transform: translateY(0);
+      -ms-transform: translateY(0);
+          transform: translateY(0);
+  opacity: 1;
+}
+.app.active .app_logout {
+  -webkit-transform: scale(1);
+      -ms-transform: scale(1);
+          transform: scale(1);
+}
+.app_top {
+  position: relative;
+  height: 28rem;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 6rem 1.5rem 2rem;
+  text-align: center;
+}
+.app_bot {
+  position: relative;
+  height: 27rem;
+  background: #fff;
+}
+.app_menu-btn {
+  position: absolute;
+  top: 2rem;
+  left: 1.5rem;
+  width: 1.8rem;
+  height: 1.7rem;
+  cursor: pointer;
+}
+.app_menu-btn span, .app_menu-btn:before, .app_menu-btn:after {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.6);
+}
+.app_menu-btn span {
+  top: 0.8rem;
+}
+.app_menu-btn:before {
+  content: "";
+  top: 0;
+}
+.app_menu-btn:after {
+  content: "";
+  bottom: 0;
+}
+.app_icon {
+  position: absolute;
+  top: 2rem;
+}
+.app_icon.search {
+  right: 1.5rem;
+  stroke-dasharray: 61.847137451171875;
+  stroke-dashoffset: 61.847137451171875;
+  -webkit-animation: animatePath 0.5s 0.5s forwards;
+          animation: animatePath 0.5s 0.5s forwards;
+}
+.app_hello {
+  font-size: 2.2rem;
+  color: #fff;
+  font-weight: normal;
+  margin-bottom: 3rem;
+}
+.app_user {
+  position: relative;
+  display: inline-block;
+  width: 9rem;
+  height: 9rem;
+  margin-bottom: 3rem;
+}
+.app_user-photo {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  -webkit-transition: -webkit-transform 0.3s 0.2s cubic-bezier(0.62, 0.35, 0.56, 1.55);
+          transition: transform 0.3s 0.2s cubic-bezier(0.62, 0.35, 0.56, 1.55);
+  -webkit-transform: scale(0);
+      -ms-transform: scale(0);
+          transform: scale(0);
+}
+.app_user-notif {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  line-height: 3rem;
+  text-align: center;
+  background: #50D2C2;
+  color: #fff;
+  font-size: 1.5rem;
+}
+.app_month:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.app_month-name {
+  display: inline-block;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 1.2rem;
+  text-transform: uppercase;
+}
+.app_month-btn {
+  display: inline-block;
+  width: 1.2rem;
+  height: 1.2rem;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-left: none;
+  border-bottom: none;
+  cursor: pointer;
+}
+.app_month-btn.left {
+  float: left;
+  -webkit-transform: rotate(-135deg);
+      -ms-transform: rotate(-135deg);
+          transform: rotate(-135deg);
+}
+.app_month-btn.right {
+  float: right;
+  -webkit-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+          transform: rotate(45deg);
+}
+.app_days {
+  height: 7rem;
+  padding: 1.5rem 2rem;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+}
+.app_day {
+  width: 14%;
+  text-align: center;
+  font-size: 1.2rem;
+}
+.app_day.weekday {
+  color: #919197;
+  text-transform: uppercase;
+}
+.app_day.date {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #3C3C43;
+}
+.app_meeting {
+  position: relative;
+  height: 6rem;
+  border-top: 1px solid #EEEEEF;
+  padding: 1rem 2rem 1rem 7.5rem;
+  -webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
+          transition: transform 0.3s, opacity 0.3s;
+  -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+          transform: translateY(-50%);
+  opacity: 0;
+}
+.app_meeting:nth-child(1) {
+  -webkit-transition-delay: 0.2s;
+          transition-delay: 0.2s;
+}
+.app_meeting:nth-child(2) {
+  -webkit-transition-delay: 0.3s;
+          transition-delay: 0.3s;
+}
+.app_meeting:nth-child(3) {
+  -webkit-transition-delay: 0.4s;
+          transition-delay: 0.4s;
+}
+.app_meeting:nth-child(4) {
+  -webkit-transition-delay: 0.5s;
+          transition-delay: 0.5s;
+}
+.app_meeting:nth-child(5) {
+  -webkit-transition-delay: 0.6s;
+          transition-delay: 0.6s;
+}
+.app_meeting-photo {
+  position: absolute;
+  left: 2rem;
+  top: 1rem;
+  width: 4rem;
+  height: 4rem;
+}
+.app_meeting-name {
+  color: #000;
+  font-size: 1.3rem;
+}
+.app_meeting-info {
+  color: #949498;
+  font-size: 1.1rem;
+}
+.app_logout {
+  position: absolute;
+  bottom: 3.3rem;
+  right: 3.3rem;
+  width: 4.6rem;
+  height: 4.6rem;
+  margin-right: -2.3rem;
+  margin-bottom: -2.3rem;
+  background: #FC3768;
+  color: #fff;
+  font-size: 2rem;
+  border-radius: 50%;
+  cursor: pointer;
+  -webkit-transition: bottom 0.4s 0.1s, right 0.4s 0.1s, -webkit-transform 0.4s 0.4s, opacity 0.1s 0.7s, background-color 0.1s 0.7s;
+          transition: bottom 0.4s 0.1s, right 0.4s 0.1s, transform 0.4s 0.4s, opacity 0.1s 0.7s, background-color 0.1s 0.7s;
+  -webkit-transform: scale(0);
+      -ms-transform: scale(0);
+          transform: scale(0);
+}
+.app_logout.clicked {
+  bottom: 50%;
+  right: 50%;
+  -webkit-transform: scale(30) !important;
+      -ms-transform: scale(30) !important;
+          transform: scale(30) !important;
+  opacity: 0.9;
+}
+.app_logout.clicked svg {
+  opacity: 0;
+}
+.app_logout-icon {
+  position: absolute;
+  width: 3rem;
+  height: 3rem;
+  top: 50%;
+  left: 50%;
+  margin-left: -1.5rem;
+  margin-top: -1.5rem;
+  -webkit-transition: opacity 0.1s;
+          transition: opacity 0.1s;
+}
+.app_logout-icon path {
+  stroke-width: 4px;
+  stroke-dasharray: 64.36235046386719;
+  stroke-dashoffset: 64.36235046386719;
+  -webkit-animation: animatePath 0.5s 0.5s forwards;
+          animation: animatePath 0.5s 0.5s forwards;
+}
+
+.ripple{
+  overflow:hidden;
+}
+
+.ripple-effect{
+  position: absolute;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  background: white;
+
+
+  -webkit-animation: ripple-animation 2s;
+
+
+          animation: ripple-animation 2s;
+}
+
+
+@-webkit-keyframes ripple-animation {
+    from {
+      -webkit-transform: scale(1);
+              transform: scale(1);
+      opacity: 0.4;
+    }
+    to {
+      -webkit-transform: scale(100);
+              transform: scale(100);
+      opacity: 0;
+    }
+}
+
+
+@keyframes ripple-animation {
+    from {
+      -webkit-transform: scale(1);
+              transform: scale(1);
+      opacity: 0.4;
+    }
+    to {
+      -webkit-transform: scale(100);
+              transform: scale(100);
+      opacity: 0;
+    }
+}
+
+@-webkit-keyframes animRipple {
+  to {
+    -webkit-transform: scale(3.5);
+            transform: scale(3.5);
+    opacity: 0;
+  }
+}
+
+@keyframes animRipple {
+  to {
+    -webkit-transform: scale(3.5);
+            transform: scale(3.5);
+    opacity: 0;
+  }
+}
+@-webkit-keyframes rotate {
+  to {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+@keyframes rotate {
+  to {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes animatePath {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes animatePath {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+#notificationToast{
+  display: inline-block;
+  position: fixed;
+  background: #323232;
+  color: #f1f1f1;
+  min-height: 48px;
+  min-width: 288px;
+  /*padding: 16px 24px 12px;*/
+  padding-left: 10px;
+  padding-right: 10px;
+  box-sizing: border-box;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+  border-radius: 2px;
+  bottom: -10px;
+  left: 12px;
+  text-align: left;
+  font-size: 14px;
+  cursor: default;
+  visibility: hidden;
+  -webkit-transition: visibility 0.3s, -webkit-transform 0.3s;
+  -moz-transition:    visibility 0.3s, -moz-transform 0.3s;
+  -ms-transition:     visibility 0.3s, -ms-transform 0.3s;
+  -o-transition:      visibility 0.3s, -o-transform 0.3s;
+  transition: visibility 0.3s, transform 0.3s;
+  -webkit-transform: translateY(50px);
+  transform: translateY(50px);
+}
+
+#notificationToast h2{
+  font-size: 12px;
+
+}
+
+#notificationToast.notify{
+  visibility: visible;
+  -webkit-transform: translateY(-22px);
+  transform: translateY(-22px);
+}

@@ -1,0 +1,308 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+
+<dom-module id="baabl-comment">
+
+  <style>
+
+
+  #indent{
+    position:relative;
+    padding-left: 1.5rem;
+    width: 100%;
+  }
+
+  #baabl_comments{
+    position: relative;
+    border: 0.1em solid #424242;
+    font-size: 1.2em;
+    padding: 0.5rem;
+    white-space: pre;
+    min-height: 7rem;
+  }
+  .baabl_comments_options{
+    min-height: 3rem;
+    position: relative;
+    padding: 0.5rem;
+  }
+
+  .baabl_comments_options ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .baabl_comments_options ul li{
+    display:inline;
+    float:right;
+    padding: 0 1rem 0 1rem;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+  }
+
+  .baabl_comments_options ul li:hover{
+    cursor: pointer;
+    transform: scale(1.1);
+
+  }
+
+  .baabl_comments_ratings{
+    display:inline;
+    float: left;
+  }
+
+  #baabl_comments_delete{
+    display: none;
+  }
+  #baabl_comments_cancel{
+    display: none;
+  }
+  #baabl_comments_edit{
+    display: none;
+  }
+  #baabl_comments_delete{
+
+  }
+
+  #commentHash{
+    display: none;
+  }
+  #commentMessage{
+    display: none;
+  }
+
+  #baabl_comments_edit_text{
+    position: relative;
+    display: none;
+    resize: vertical;
+    border: 0.1em solid #424242;
+    font-size: 1.2em;
+    padding: 0.5rem;
+    white-space: pre;
+    min-height: 7rem;
+    width: 100%;
+  }
+
+
+
+  </style>
+
+  <template>
+    <input id = "commentHash" value={{commentHash}}>
+    <input id = "commentMessage" value={{baablCommentmessage}}>
+    <div id = "baabl_comments_container">
+      <div id = "indent">
+        <div id = "baabl_comments">
+        </div>
+        <textarea id = "baabl_comments_edit_text"></textarea>
+        <div class = "baabl_comments_options">
+          <ul>
+            <div class = "baabl_comments_ratings">
+              <li><span class="fa fa-thumbs-o-down"></span></li>
+              <li><div class = "baabl_comments_rating">3</div></li>
+              <li><span class="fa fa-thumbs-o-up"></span></li>
+            </div>
+            <li id = "baabl_comments_delete">Delete</li>
+            <li id = "baabl_comments_cancel">Cancel</li>
+            <li id = "baabl_comments_edit">Edit</li>
+            <li id = "baabl_comments_report">Report</li>
+          </ul>
+        </div>
+    </div>
+
+  </div>
+
+  </template>
+
+
+  <script>
+
+    Polymer({
+
+      is: 'baabl-comment',
+
+      properties: {
+        baablCommentmessage:{
+          type: String,
+          default: "",
+          observer: 'baablCommentmessageChanged'
+        },
+
+        commentHash:{
+          type: String,
+          default: "",
+          observer: 'commentHashObserver'
+        },
+
+        baablCommenteditable:{
+          type: Boolean,
+          default: false,
+          observer: 'baablCommenteditableChanged'
+        },
+
+        baablCommentmultiplier: {
+          type: Number,
+          default: 1,
+          observer: 'baablCommentmultiplierChanged'
+        }
+
+      },
+
+      ready: function(){
+
+        var rootLocation = "http://localhost/baabl/htdocs/";
+
+        var comment_hash = this.$.commentHash;
+        var comment_message = this.$.commentMessage;
+
+        var baabl_comments_edit = this.$.baabl_comments_edit;
+        var baabl_comments_cancel = this.$.baabl_comments_cancel;
+        var baabl_comments_report = this.$.baabl_comments_report;
+        var baabl_comments_delete = this.$.baabl_comments_delete;
+
+        var baabl_comments = this.$.baabl_comments;
+        var baabl_comments_edit_text = this.$.baabl_comments_edit_text;
+
+        var that = this;
+
+        $(baabl_comments_delete).on("click", function(){
+          event.stopPropagation();
+          $('#confirmationMessage').html('Are you sure you want to delete this comment?');
+          $('#confirmationToast').attr('class', 'notify');
+          $("#current_baabl_comment_delete").val($(comment_hash).val());
+          $("#current_baabl_delete").val('');
+        });
+
+
+        $(baabl_comments_edit).on("click", function(){
+          if($(baabl_comments_edit).text() == "Edit"){
+            $(baabl_comments).hide();
+            $(baabl_comments_edit_text).show();
+            $(baabl_comments_edit_text).focus().val("").val($(baabl_comments).text());
+            $(baabl_comments_edit).text('Save');
+            $(baabl_comments_report).hide();
+            $(baabl_comments_delete).hide();
+            $(baabl_comments_cancel).show();
+          }
+          else{
+
+            if($(baabl_comments).text() != $(baabl_comments_edit_text).val()){
+
+              var data = {
+                'Action': 'UpdateBaablComment',
+                'comment_hash' : $(comment_hash).val(),
+                'comment_message' : $(baabl_comments_edit_text).val()
+              };
+              var newCommentMessage = $(baabl_comments_edit_text).val()
+
+              var location = rootLocation + "baabl_comments/baabl_comments.php"
+              $.ajax({
+                type:    "POST",
+                url:     location,
+                data:    data,
+                success: function(resultPost) {
+                  var result = JSON.parse(resultPost);
+                  if(result['success']){
+
+                    that.baablCommentmessage =   $(baabl_comments_edit_text).val();
+                    $(baabl_comments_edit_text).text('');
+
+                    $("#notificationToast").html('<h2>'+ result['success']+'</h2>');
+                    $("#notificationToast").attr('class', 'notify');
+                    setTimeout(function () {
+                      $("#notificationToast").removeClass('notify');
+                    }, 3000);
+                  }
+                },
+                error:   function(jqXHR, textStatus, errorThrown) {
+                  alert("Error, status = " + textStatus + ", " + "error thrown: " + errorThrown);
+                }
+              });
+
+              $(baabl_comments_edit_text).hide();
+
+              $(baabl_comments_edit).text('Edit');
+              $(baabl_comments).show();
+              $(baabl_comments_report).show();
+              $(baabl_comments_delete).show();
+              $(baabl_comments_cancel).hide();
+
+            }
+            else{
+              $(baabl_comments_edit_text).hide();
+              $(baabl_comments_edit_text).text('');
+              $(baabl_comments_edit).text('Edit');
+              $(baabl_comments).show();
+              $(baabl_comments_report).show();
+              $(baabl_comments_delete).show();
+              $(baabl_comments_cancel).hide();
+            }
+          }
+
+        });
+
+
+        $(baabl_comments_cancel).on("click", function(){
+            $(baabl_comments_edit_text).hide();
+            $(baabl_comments_edit_text).text('');
+            $(baabl_comments_edit).text('Edit');
+            $(baabl_comments).show();
+            $(baabl_comments_report).show();
+            $(baabl_comments_delete).show();
+            $(baabl_comments_cancel).hide();
+
+
+        });
+
+
+
+
+        $(baabl_comments_report).on("click", function(){
+          $("#report_modal_report").val('');
+          $("#report_modal").modal('show');
+          $("#current_baabl_delete").val('');
+          $("#current_baabl_comment_delete").val($(comment_hash).val());
+        });
+
+
+      },
+
+
+      baablCommentmessageChanged: function(newValue, oldValue){
+        var baabl_comments = this.$.baabl_comments;
+        $(baabl_comments).text(newValue);
+      },
+
+      commentHashObserver: function(newValue, oldValue){
+
+      },
+
+
+      baablCommenteditableChanged: function(newValue, oldValue){
+        if(newValue){
+          var baabl_comments_edit = this.$.baabl_comments_edit;
+          var baabl_comments_delete = this.$.baabl_comments_delete;
+          $(baabl_comments_edit).show();
+          $(baabl_comments_delete).show();
+        }
+
+      },
+
+      baablCommentmultiplierChanged: function(newValue, oldValue){
+        var indent = this.$.indent;
+        var padding = newValue * 1.5;
+        padding = padding+"rem";
+        $(indent).css("padding-left", padding);
+
+      }
+
+
+    });
+
+  </script>
+
+
+
+</dom-module>

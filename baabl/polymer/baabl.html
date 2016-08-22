@@ -1,0 +1,562 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="baabl_comments.html">
+
+
+<dom-module id="baabl-container">
+
+<style>
+.baabl_container{
+  display: block;
+  background-color: #fff;
+  width: 80rem;
+  position: relative;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  margin-bottom: 10rem;
+}
+
+#baabl_ratings{
+  float: left;
+  width: 4rem;
+  min-height: 10rem;
+  position: relative;
+  overflow: none;
+}
+
+#baabl_upvote{
+  position: absolute;
+  padding: 0.5rem;
+  top: 0;
+
+
+}
+
+#baabl_downvote{
+  position: absolute;
+  padding: 0.5rem;
+  bottom: 0;
+}
+
+#baabl_upvote span{
+  font-size: 2rem;
+  color: #424242;
+
+
+}
+
+#baabl_downvote span{
+  font-size: 2rem;
+  color: #424242;
+
+}
+
+#baabl_total_vote{
+  position: absolute;
+  top: 4rem;
+}
+
+#baabl_image{
+  display: none;
+}
+
+#baabl_message_container{
+  float: right;
+  width: 76rem;
+  min-height: 10rem;
+  position: relative;
+}
+
+#baabl_message{
+  position: relative;
+  white-space: pre;
+  font-size: 1.2em;
+  padding: 0.5rem;
+  min-height: 7rem;
+  border: 0.1em solid #424242;
+}
+
+#baabl_message_editing{
+  display: none;
+  position: relative;
+  resize: vertical;
+  width: 100%;
+  font-size: 1.2em;
+  padding: 0.5rem;
+  min-height: 7rem;
+  border: 0.1em solid #424242;
+}
+
+
+
+
+#baabl_message_options{
+  min-height: 3rem;
+  position: relative;
+  padding: 0.5rem;
+}
+
+#baabl_message_options ul{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+#baabl_message_options ul li{
+  float: right;
+  padding: 0 1rem 0 1rem;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+}
+
+#baabl_message_options ul li:hover{
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
+#baabl_comments_container{
+  clear:both;
+  width: 80rem;
+  position: relative;
+  background-color: #fff;
+  padding-left: 4rem;
+}
+
+#baabl_comments_adder{
+  display: none;
+  width: 80rem;
+  position: relative;
+  background-color: #fff;
+  padding-left: 5.5rem;
+}
+
+#baabl_comments_adder_options{
+  min-height: 3rem;
+  position: relative;
+  padding: 0.5rem;
+}
+
+#baabl_comments_adder_options ul{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+#baabl_comments_adder_options ul li{
+  float: right;
+  padding: 0 1rem 0 1rem;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+}
+
+#baabl_comments_adder_options ul li:hover{
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
+#baabl_comments_adder_text{
+  position: relative;
+  resize: vertical;
+  width: 100%;
+  font-size: 1.2em;
+  padding: 0.5rem;
+  min-height: 5rem;
+  border: 0.1em solid #424242;
+}
+
+#baabl_message_cancel{
+  display: none;
+}
+
+#baabl_message_edit{
+  display: none;
+}
+
+#baabl_message_delete{
+  display: none;
+}
+
+
+
+
+
+</style>
+
+<template>
+
+
+
+  <div class = "baabl_container">
+
+
+    <div id = "baabl_ratings">
+      <div id = "baabl_upvote">
+        <span class="fa fa-thumbs-o-up"></span>
+      </div>
+      <div id = "baabl_total_vote">
+      </div>
+      <div id = "baabl_downvote">
+        <span class="fa fa-thumbs-o-down"></span>
+      </div>
+    </div>
+
+    <div id = "baabl_image">
+
+    </div>
+
+    <div id ="baabl_message_container">
+      <div id = "baabl_message">
+      </div>
+      <textarea id = "baabl_message_editing"></textarea>
+      <div id = "baabl_message_options">
+        <ul>
+          <li id = "baabl_message_delete">Delete</li>
+          <li id = "baabl_message_cancel">Cancel</li>
+          <li id = "baabl_message_edit">Edit</li>
+          <li id = "baabl_message_report">Report</li>
+          <li id = "baabl_message_comment">Comment</li>
+        </ul>
+      </div>
+    </div>
+
+    <div id = "baabl_comments_container">
+
+    </div>
+
+    <div id = "baabl_comments_adder">
+        <textarea id = "baabl_comments_adder_text"></textarea>
+        <div id = "baabl_comments_adder_options">
+          <ul>
+            <li id = "baabl_comments_adder_cancel">Cancel</li>
+            <li id = "baabl_comments_adder_save">Save</li>
+          </ul>
+        </div>
+    </div>
+
+  </div>
+
+
+
+
+
+
+
+
+</template>
+
+</dom-module>
+
+<script>
+
+Polymer({
+
+  is: 'baabl-container',
+
+  properties: {
+    baablMessage: {
+      type: String,
+      default: "",
+      observer: 'baablMessageChanged'
+    },
+
+    baablHash: {
+      type: String,
+      default: ""
+    },
+
+    baablTotalvote: {
+      type: Number,
+      default: 0,
+      observer: "baablTotalVoteChanged"
+    },
+
+    baablEditable: {
+      type: Boolean,
+      default: false,
+      observer: "baablEditableObserver"
+    }
+
+
+  },
+
+  ready: function() {
+    var rootLocation = "http://localhost/baabl/htdocs/";
+    var baabl_message = this.$.baabl_message;
+    var baabl_message_editing = this.$.baabl_message_editing;
+    var baabl_message_delete = this.$.baabl_message_delete;
+    var baabl_message_cancel = this.$.baabl_message_cancel;
+    var baabl_message_edit = this.$.baabl_message_edit;
+    var baabl_message_report = this.$.baabl_message_report;
+    var baabl_message_comment = this.$.baabl_message_comment;
+    var that = this;
+    var baablHash = this.baablHash;
+    var report_modal = this.$.report_modal;
+    var baabl_message_text = this.baablMessage;
+
+
+    var baabl_comments_adder = this.$.baabl_comments_adder;
+    var baabl_comments_adder_save = this.$.baabl_comments_adder_save;
+    var baabl_comments_adder_cancel = this.$.baabl_comments_adder_cancel;
+    var baabl_comments_adder_text = this.$.baabl_comments_adder_text;
+
+
+
+    var data = {
+      'Action': 'GetBaablComments',
+      'baabl_hash' : this.baablHash
+    };
+
+    // console.log(this.baablHash);
+    var commentsContainer = this.$.baabl_comments_container;
+    var location = rootLocation + "baabl_comments/baabl_comments.php"
+    $.ajax({
+      type:    "POST",
+      url:     location,
+      data:    data,
+      success: function(resultPost) {
+        var result = JSON.parse(resultPost);
+        if(result['baablCommentsArray'] != "no comments"){
+          for(i = 0; i < result['baablCommentsArray'].length; i++){
+            var dynamicEl = document.createElement("baabl-comment");
+            dynamicEl.setAttribute("baabl-commentmessage", result['baablCommentsArray'][i]['comment_message']);
+            dynamicEl.setAttribute("id", "baabl_comment_" + result['baablCommentsArray'][i]['comment_hash']);
+            dynamicEl.setAttribute("comment-hash", result['baablCommentsArray'][i]['comment_hash']);
+            dynamicEl.setAttribute("baabl-commentmultiplier", "1");
+            if(result['baablCommentsArray'][i]['user_hash']){
+              dynamicEl.setAttribute("baabl-commenteditable", "true");
+            }
+            commentsContainer.appendChild(dynamicEl);
+          }
+
+        }
+      },
+      error:   function(jqXHR, textStatus, errorThrown) {
+        alert("Error, status = " + textStatus + ", " + "error thrown: " + errorThrown);
+      }
+    });
+
+
+
+    $(baabl_message_delete).on("click", function(){
+      event.stopPropagation();
+      $('#confirmationMessage').html('Are you sure you want to delete this Baabl?');
+      $('#confirmationToast').attr('class', 'notify');
+      $("#current_baabl_delete").val(baablHash);
+      $("#current_baabl_comment_delete").val('');
+    });
+
+
+
+      $(baabl_message_cancel).on("click", function(){
+        $(baabl_message_comment).show();
+        $(baabl_message_delete).show();
+        $(baabl_message_report).show();
+        $(baabl_message_cancel).hide();
+        $(baabl_message_editing).val("");
+        $(baabl_message_editing).hide();
+        $(baabl_message).show();
+        $(baabl_message_edit).text("Edit");
+      });
+
+
+
+    $(baabl_message_edit).on("click", function(){
+
+      if($(baabl_message_edit).text() == "Edit"){
+        $(baabl_message).hide();
+        $(baabl_message_comment).hide();
+        $(baabl_message_delete).hide();
+        $(baabl_message_report).hide();
+        $(baabl_message_cancel).show();
+        $(baabl_message_editing).show();
+        $(baabl_message_editing).focus().val("").val(baabl_message_text);
+        $(baabl_message_edit).text("Save");
+      }
+      else{
+
+        if(baabl_message_text != $(baabl_message_editing).val()){
+
+          var data = {
+            'Action': 'UpdateBaablMessage',
+            'baabl_hash' : baablHash,
+            'baabl_message' : $(baabl_message_editing).val()
+          };
+          var newBaablMessage = $(baabl_message_editing).val();
+          var location = rootLocation + "baabl/baabl.php"
+          $.ajax({
+            type:    "POST",
+            url:     location,
+            data:    data,
+            success: function(resultPost) {
+              var result = JSON.parse(resultPost);
+              if(result['success']){
+                that.baablMessage = newBaablMessage;
+                baabl_message_text = newBaablMessage;
+                $("#notificationToast").html('<h2>'+ result['success']+'</h2>');
+                $("#notificationToast").attr('class', 'notify');
+                setTimeout(function () {
+                  $("#notificationToast").removeClass('notify');
+                }, 3000);
+              }
+            },
+            error:   function(jqXHR, textStatus, errorThrown) {
+              alert("Error, status = " + textStatus + ", " + "error thrown: " + errorThrown);
+            }
+          });
+
+
+          $(baabl_message_comment).show();
+          $(baabl_message_delete).show();
+          $(baabl_message_report).show();
+          $(baabl_message_cancel).hide();
+          $(baabl_message_editing).val("");
+          $(baabl_message_editing).hide();
+          $(baabl_message).show();
+          $(baabl_message_edit).text("Edit");
+
+        }
+        else{
+          $(baabl_message_comment).show();
+          $(baabl_message_delete).show();
+          $(baabl_message_report).show();
+          $(baabl_message_cancel).hide();
+          $(baabl_message_editing).val("");
+          $(baabl_message_editing).hide();
+          $(baabl_message).show();
+          $(baabl_message_edit).text("Edit");
+        }
+
+      }
+
+
+    });
+
+
+
+
+
+
+
+
+
+
+    $(baabl_message_report).on("click", function(){
+      $("#report_modal_report").val('');
+      $("#report_modal").modal('show');
+      $("#current_baabl_delete").val(baablHash);
+      $("current_baabl_comment_delete").val('');
+
+    });
+
+
+
+
+
+
+
+    $(baabl_message_comment).on("click", function(){
+      $(baabl_comments_adder).show('slow');
+
+
+    });
+
+    $(baabl_comments_adder_cancel).on("click", function(){
+      $(baabl_comments_adder_text).val('');
+      $(baabl_comments_adder).hide('slow');
+    });
+
+
+    $(baabl_comments_adder_save).on("click", function(){
+
+      if($(baabl_comments_adder_text).val() == ""){
+        $("#notificationToast").html('<h2>Comment must not be empty</h2>');
+        $("#notificationToast").attr('class', 'notify');
+        setTimeout(function () {
+          $("#notificationToast").removeClass('notify');
+        }, 3000);
+      }
+      else{
+        var data = {
+          'Action': 'NewComment',
+          'baabl_hash' : baablHash,
+          'comment_message' : $(baabl_comments_adder_text).val(),
+          'parent_type' : 'baabl',
+        };
+
+
+        var location = rootLocation + "baabl_comments/baabl_comments.php"
+        $.ajax({
+          type:    "POST",
+          url:     location,
+          data:    data,
+          success: function(resultPost) {
+            var result = JSON.parse(resultPost);
+            if(result['success']){
+
+              $(baabl_comments_adder).hide('slow', function(){
+                var dynamicEl = document.createElement("baabl-comment");
+                dynamicEl.setAttribute("baabl-commentmessage", $(baabl_comments_adder_text).val());
+                dynamicEl.setAttribute("comment-hash", result['comment_hash']);
+                dynamicEl.setAttribute("baabl-commentmultiplier", "1");
+                dynamicEl.setAttribute("baabl-commenteditable", "true");
+                commentsContainer.appendChild(dynamicEl);
+                $(baabl_comments_adder_text).val('');
+
+              });
+
+
+
+
+
+
+
+              $("#notificationToast").html('<h2>'+ result['success']+'</h2>');
+              $("#notificationToast").attr('class', 'notify');
+              setTimeout(function () {
+                $("#notificationToast").removeClass('notify');
+              }, 3000);
+            }
+          },
+          error:   function(jqXHR, textStatus, errorThrown) {
+            alert("Error, status = " + textStatus + ", " + "error thrown: " + errorThrown);
+          }
+        });
+
+      }
+
+
+
+    });
+
+
+  },
+
+
+  baablMessageChanged: function(newValue, oldValue) {
+    var baabl_message = this.$.baabl_message;
+    $(baabl_message).text(newValue);
+  },
+
+  baablTotalVoteChanged: function(newValue, oldValue) {
+    var baabl_total_vote = this.$.baabl_total_vote;
+    $(baabl_total_vote).text(newValue);
+  },
+
+  baablEditableObserver: function(newValue, oldValue){
+    if(newValue){
+
+      var baabl_message_edit = this.$.baabl_message_edit;
+      var baabl_message_delete = this.$.baabl_message_delete;
+      $(baabl_message_edit).show();
+      $(baabl_message_delete).show();
+    }
+  }
+
+});
+
+</script>

@@ -1,0 +1,88 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+
+<dom-module id="notification-message">
+
+  <style>
+
+    .notification_container{
+      display: block;
+      background-color: white;
+      width: 100%;
+      position: relative;
+      cursor: pointer;
+
+      -webkit-transition: all 0.3s ease;
+      -moz-transition: all 0.3s ease;
+      -o-transition: all 0.3s ease;
+      -ms-transition: all 0.3s ease;
+    }
+
+    .notification_container:hover .notification_message{
+      background-color: rgba(0,0,0,.1);
+
+    }
+
+
+    .notification_picture {
+      float: left;
+  		width: 5rem;
+  		height: 5rem;
+  		position: relative;
+      background-color: #424242;
+      overflow: none;
+      background-image: url("../images/5.jpg");
+      background-size: cover;
+      overflow: auto;
+    }
+
+    .notification_message {
+      float: right;
+  		width: 35rem;
+  		height: 5rem;
+  		position: relative;
+      background-color: #fff;
+      font-size: 0.8em;
+      padding: 0.5rem;
+      border-bottom: 1px solid #424242;
+    }
+
+    .notification_time {
+      position: absolute;
+      bottom: 0;
+      right: 0.5rem;
+      font-size: 0.8em;
+    }
+
+
+  </style>
+
+  <template>
+    <div class = "notification_container">
+      <div class = "notification_picture">
+
+      </div>
+      <div class = "notification_message">
+        daviddsadasd yuandsadadasdda hadaviddsadasd yuandsadadasdda hadaviddsadasd yuandsadadasdda hadaviddsadasd...
+        <div class = "notification_time">
+          today at 3.32pm
+        </div>
+      </div>
+    </div>
+  </template>
+
+</dom-module>
+
+<script>
+
+  Polymer({
+
+    is: 'notification-message',
+
+    properties: {
+
+    }
+
+  });
+
+</script>

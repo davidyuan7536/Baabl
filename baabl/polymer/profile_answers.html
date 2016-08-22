@@ -1,0 +1,534 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+
+<dom-module id="profile-answer">
+
+  <style>
+    #wrap{
+      margin-top: 1rem;
+      background-color: white;
+      width: 100%;
+      border-radius: 1rem;
+    }
+
+    #question_wrap{
+      padding: 1rem;
+      font-weight: bold;
+      white-space: pre-wrap;
+    }
+
+    #answer_wrap{
+      padding: 1rem;
+      display: table;
+      width: 100%;
+      border-spacing: 10px;
+    }
+
+    #answer_profile_pic{
+      height: 5rem;
+      width: 5rem;
+      vertical-align: top;
+      overflow: auto;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      display: table-cell;
+    }
+
+
+    #answer_text{
+      white-space: pre-wrap;
+
+      vertical-align: top;
+      display: table-cell;
+
+    }
+
+    #answer_text_edit{
+      resize: vertical;
+      display: none;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .break_bar{
+      width: 100%;
+      height: 0.1rem;
+      background-color: #E0E0E0;
+    }
+
+    #answer_options{
+      padding: 1rem;
+      display: inline-block;
+      margin-bottom: 1rem;
+    }
+
+    #answer_delete{
+      padding: 0.5rem;
+      text-align: center;
+      display: inline-block;
+      float: right;
+      margin-top: 1rem;
+      margin-left: 0.5rem;
+      margin-right: 1rem;
+      cursor: pointer;
+    }
+
+    #answer_delete:hover{
+      -moz-box-shadow: 0 2px 2px -1px rgba(31, 31, 31, 0.5);
+      -webkit-box-shadow: 0 2px 2px -1px rgba(31, 31, 31, 0.5);
+      box-shadow: 0 2px 2px -1px rgba(31, 31, 31, 0.5);
+    }
+
+    #answer_edit{
+      padding: 0.5rem;
+      text-align: center;
+      display: inline-block;
+      float: right;
+      margin-top: 1rem;
+      margin-left: 0.5rem;
+      margin-right: 1rem;
+      cursor: pointer;
+    }
+
+    #answer_edit:hover{
+      -moz-box-shadow: 0 2px 2px -1px rgba(31, 31, 31, 0.5);
+      -webkit-box-shadow: 0 2px 2px -1px rgba(31, 31, 31, 0.5);
+      box-shadow: 0 2px 2px -1px rgba(31, 31, 31, 0.5);
+    }
+
+    #edited_flag{
+      padding-right: 1rem;
+      padding-left: 1rem;
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+      background-color: #ff3366;
+      cursor: pointer;
+      color: #fff;
+    }
+
+    #edited_flag::after {
+      content: "+";
+      float: right;
+
+    }
+
+    #edited_flag.displaying::after{
+      -webkit-animation: rotate 0.5s 1 linear;
+              animation: rotate 0.5s 1 linear;
+    }
+
+    #edited_flag.hiding::after{
+      -webkit-animation: rotate2 0.5s 1 linear;
+              animation: rotate2 0.5s 1 linear;
+    }
+
+    #edit_list{
+      padding: 0.5rem;
+    }
+
+    @-webkit-keyframes rotate {
+      to {
+        -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+      }
+    }
+    @keyframes rotate {
+      to {
+        -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+      }
+    }
+
+    @-webkit-keyframes rotate2 {
+      to {
+        -webkit-transform: rotate(-360deg);
+                transform: rotate(-360deg);
+      }
+    }
+    @keyframes rotate2 {
+      to {
+        -webkit-transform: rotate(-360deg);
+                transform: rotate(-360deg);
+      }
+    }
+
+
+
+  </style>
+
+  <template>
+    <div id= "wrap">
+      <div id = "question_wrap"></div>
+
+      <div class = "break_bar"></div>
+
+      <div id = "answer_wrap">
+        <div id = "answer_profile_pic">
+
+        </div>
+        <div id = "answer_text"></div>
+        <textarea id = "answer_text_edit" maxlength="1000"></textarea>
+      </div>
+
+      <div class = "break_bar"></div>
+
+      <div>
+        <div id = "answer_options">
+
+        </div>
+
+        <div id = "answer_delete">
+          <span class="fa fa-eraser"></span> Delete
+        </div>
+
+        <div id = "answer_edit">
+          <span class="fa fa-pencil"></span> Edit
+        </div>
+      </div>
+
+      <div>
+        <div id = "edited_flag">Edit History</div>
+        <div id = "edit_list">
+        </div>
+      </div>
+
+
+    </div>
+
+  </template>
+
+
+  <script>
+
+    Polymer({
+
+      is: 'profile-answer',
+
+      properties: {
+        question:{
+          type: String,
+          default: "",
+          observer: 'questionObserver'
+        },
+
+        answer:{
+          type: String,
+          default: "",
+          observer: 'answerObserver'
+        },
+
+        answerTime:{
+          type: String,
+          default: "",
+          observer: 'answerTimeObserver'
+        },
+
+        pictureThumbnail:{
+          type: String,
+          default: "",
+          observer: 'pictureThumbnailObserver'
+        },
+
+        answerHash:{
+          type: String,
+          default: ""
+        },
+
+        answerEdited:{
+          type: Number,
+          default: 0
+        }
+
+      },
+
+      ready: function(){
+
+        var rootLocation = "http://localhost/baabl/htdocs/";
+        var answerHash = this.answerHash;
+        var answerEdited = this.answerEdited;
+        console.log(answerEdited);
+        var editing = false;
+        var processing = false;
+        var displaying = false;
+        var edit = this.$.answer_edit;
+        var text = this.$.answer_text;
+        var editText = this.$.answer_text_edit;
+        var answerOptions = this.$.answer_options;
+
+
+
+        function NewEdit(editText, oldText, editType, editTime){
+          processing = true;
+          var data = {
+            'Action': 'NewEdit',
+            'edit_hash' : answerHash,
+            'edit_type' : editType,
+            'edit_text' : editText,
+            'old_text' : oldText,
+            'edit_time' : editTime
+          };
+
+          var location = rootLocation + "baabl_profile/baabl_profile.php"
+          $.ajax({
+            type:    "POST",
+            url:     location,
+            data:    data,
+            success: function(resultPost) {
+              var result = JSON.parse(resultPost);
+              if(result['errorMessage']){
+                $("#notificationToast").html('<h2>'+ result['errorMessage']+'</h2>');
+                $("#notificationToast").attr('class', 'notify');
+                setTimeout(function () {
+                  $("#notificationToast").removeClass('notify');
+                }, 3000);
+                processing = false;
+              }
+              else if(result['success']){
+                $("#notificationToast").html('<h2>'+ result['success']+'</h2>');
+                $("#notificationToast").attr('class', 'notify');
+                setTimeout(function () {
+                  $("#notificationToast").removeClass('notify');
+                }, 3000);
+                $(answerOptions).html(result['datenow']);
+                console.log(result['datenow']);
+                processing = false;
+              }
+            },
+            error:   function(jqXHR, textStatus, errorThrown) {
+              alert("Error, status = " + textStatus + ", " + "error thrown: " + errorThrown);
+              processing = false;
+            }
+          });
+        }
+
+        var currentAnswer = this.answer;
+        // var currentAnswerTime = this.answerTime;
+        $(edit).on("click", function(){
+          if(editing == false){
+            editing = true;
+            $(edit).html( "<span class=\"fa fa-pencil\"></span> Save");
+            $(text).css("display", "none");
+            $(editText).val($(text).html());
+            $(editText).css("display", "table-cell");
+            $(editText).focus();
+
+          }
+          else{
+            editing = false;
+            if(processing == true){
+              $("#notificationToast").html('<h2>Please wait for last edit to process</h2>');
+              $("#notificationToast").attr('class', 'notify');
+              setTimeout(function () {
+                $("#notificationToast").removeClass('notify');
+              }, 3000);
+              return;
+            }
+            else{
+              $(edit).html( "<span class=\"fa fa-pencil\"></span> Edit");
+              if($(editText).val() != currentAnswer){
+
+                currentAnswerTime = $(answerOptions).html();
+                NewEdit($(editText).val(), currentAnswer, "answer", currentAnswerTime);
+                currentAnswer = $(editText).val();
+
+              }
+
+              $(text).html($(editText).val());
+              $(text).css("display", "table-cell");
+              $(editText).css("display", "none");
+            }
+          }
+        });
+
+        var del = this.$.answer_delete;
+        $(del).on("click", function(){
+          event.stopPropagation();
+          $('#confirmationMessage').html('Are you sure you want to delete this question?');
+          $('#confirmationToast').addClass('notify');
+        });
+
+        $('#confirmationToastYes').click(function(event){
+          event.stopPropagation();
+          $('#confirmationToast').removeClass('notify');
+
+            var data = {
+              'Action': 'DeleteQuestion',
+              'answer_hash' : answerHash
+            };
+
+            var location = rootLocation + "baabl_profile/baabl_profile.php"
+            $.ajax({
+              type:    "POST",
+              url:     location,
+              data:    data,
+              success: function(resultPost) {
+                var result = JSON.parse(resultPost);
+                if(result['errorMessage']){
+                  $("#notificationToast").html('<h2>'+ result['errorMessage']+'</h2>');
+                  $("#notificationToast").attr('class', 'notify');
+                  setTimeout(function () {
+                    $("#notificationToast").removeClass('notify');
+                  }, 3000);
+                }
+                if(result['success']){
+                  $("#notificationToast").html('<h2>'+ result['success']+'</h2>');
+                  $("#notificationToast").attr('class', 'notify');
+                  setTimeout(function () {
+                    $("#notificationToast").removeClass('notify');
+                  }, 3000);
+                }
+              },
+              error:   function(jqXHR, textStatus, errorThrown) {
+                alert("Error, status = " + textStatus + ", " + "error thrown: " + errorThrown);
+              }
+            });
+          }
+        });
+
+
+
+
+        var editedFlag = this.$.edited_flag;
+        var editList = this.$.edit_list;
+        var animating = false;
+
+        var i = 0;
+
+        var loopArray = function(arr) {
+          animating = true;
+          customLoop(arr[i], function(){
+
+              i++;
+              if(i < arr.length) {
+                  loopArray(arr);
+              }
+              else{
+                animating = false;
+                i = 0;
+              }
+          });
+        }
+
+        function customLoop(element, callback) {
+
+
+          $("<div>"+element.edit_text+"</div>" +
+          "<div style = \"font-size: 0.9em; margin-top: 0.5rem; \">"+element.edit_time+"</div>" +
+         "<div style = \"width: 100%; height: 0.1rem; background-color: #E0E0E0; \"></div>").hide().appendTo(editList).show(100);
+          callback();
+        }
+
+          var editHistory;
+
+          function GetEditHistory(){
+
+            var def = new $.Deferred();
+
+
+            var data = {
+              'Action': 'GetEditHistory',
+              'edit_hash' : answerHash,
+              'edit_type' : "answer"
+            };
+
+            var location = rootLocation + "baabl_profile/baabl_profile.php"
+            $.ajax({
+              type:    "POST",
+              url:     location,
+              data:    data,
+              success: function(resultPost) {
+                var result = JSON.parse(resultPost);
+                if(result['errorMessage']){
+                  $("#notificationToast").html('<h2>'+ result['errorMessage']+'</h2>');
+                  $("#notificationToast").attr('class', 'notify');
+                  setTimeout(function () {
+                    $("#notificationToast").removeClass('notify');
+                  }, 3000);
+                  def.resolve();
+                }
+                else{
+                  editHistory = result['edits'];
+                  def.resolve();
+                }
+              },
+              error:   function(jqXHR, textStatus, errorThrown) {
+                alert("Error, status = " + textStatus + ", " + "error thrown: " + errorThrown);
+                def.resolve();
+              }
+            });
+
+            return $.when(def).promise();
+          }
+
+          if(answerEdited != 0){
+            GetEditHistory().done(function() {
+
+
+              $(editedFlag).on("click", function(){
+                if(animating == true){
+                  return;
+                }
+
+                if(displaying == false){
+
+                  $(editedFlag).addClass("displaying");
+                  $(editedFlag).removeClass("hiding");
+                  loopArray(editHistory);
+                  displaying = true;
+
+                  // $(first).show(100);
+                }
+                else{
+                  $(editList).children().hide(100).promise().then(function() {
+                      $(editList).empty();
+                  });
+
+                  displaying = false;
+
+                  $(editedFlag).addClass("hiding");
+                  $(editedFlag).removeClass("displaying");
+
+                  // $(first).hide(100);
+                }
+              });
+
+
+            });
+          }
+          else{
+            $(editList).remove();
+            $(editedFlag).remove();
+          }
+      },
+
+      questionObserver: function(newValue, oldValue){
+        var question = this.$.question_wrap;
+        $(question).text(newValue);
+      },
+
+      answerObserver: function(newValue, oldValue){
+        var answer = this.$.answer_text;
+        $(answer).text(newValue);
+      },
+
+      answerTimeObserver: function(newValue, oldValue){
+        var answer_options = this.$.answer_options;
+        $(answer_options).text(newValue);
+      },
+
+      pictureThumbnailObserver: function(newValue, oldValue){
+        var rootLocation = "http://localhost/baabl/htdocs/";
+        var answer_profile_pic = this.$.answer_profile_pic;
+        var picturePath = newValue;
+        $(answer_profile_pic).css("background-image", "url("+picturePath+")");
+      }
+
+    });
+
+  </script>
+
+
+
+</dom-module>

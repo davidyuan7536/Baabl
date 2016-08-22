@@ -1,0 +1,163 @@
+.main_content{
+  min-width: 800px;
+  position: absolute;
+  padding-left: 13rem;
+  padding-top: 10rem;
+  padding-right: 5rem;
+  padding-bottom: 5rem;
+
+}
+
+#baabl_container{
+  z-index: 2;
+}
+
+#report_modal_report{
+  position: relative;
+  resize: vertical;
+  width: 100%;
+  font-size: 1.2em;
+  padding: 0.5rem;
+  min-height: 7rem;
+  border: 0.1em solid #424242;
+}
+
+
+#notificationToast{
+  z-index: 100;
+  display: inline-block;
+  position: fixed;
+  background: #323232;
+  color: #f1f1f1;
+  min-height: 48px;
+  min-width: 288px;
+  /*padding: 16px 24px 12px;*/
+  padding-left: 10px;
+  padding-right: 10px;
+  box-sizing: border-box;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+  border-radius: 2px;
+  bottom: -10px;
+  left: 12px;
+  text-align: left;
+  font-size: 14px;
+  cursor: default;
+  visibility: hidden;
+  -webkit-transition: visibility 0.3s, -webkit-transform 0.3s;
+  -moz-transition:    visibility 0.3s, -moz-transform 0.3s;
+  -ms-transition:     visibility 0.3s, -ms-transform 0.3s;
+  -o-transition:      visibility 0.3s, -o-transform 0.3s;
+  transition: visibility 0.3s, transform 0.3s;
+  -webkit-transform: translateY(50px);
+  transform: translateY(50px);
+}
+
+#notificationToast h2{
+  font-size: 12px;
+
+}
+
+#notificationToast.notify{
+  visibility: visible;
+  -webkit-transform: translateY(-22px);
+  transform: translateY(-22px);
+}
+
+#confirmationToast{
+  z-index: 100;
+  display: inline-block;
+  position: fixed;
+  background: #424242;
+  color: #f1f1f1;
+  min-height: 48px;
+  min-width: 288px;
+  /*padding: 16px 24px 12px;*/
+  padding-bottom: 1rem;
+  padding-top: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  box-sizing: border-box;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+  border-radius: 2px;
+  bottom: -100px;
+  left: 12px;
+  text-align: center;
+  font-size: 14px;
+  cursor: default;
+  visibility: hidden;
+  -webkit-transition: visibility 0.3s, -webkit-transform 0.3s;
+  -moz-transition:    visibility 0.3s, -moz-transform 0.3s;
+  -ms-transition:     visibility 0.3s, -ms-transform 0.3s;
+  -o-transition:      visibility 0.3s, -o-transform 0.3s;
+  transition: visibility 0.3s, transform 0.3s;
+  -webkit-transform: translateY(50px);
+  transform: translateY(50px);
+}
+
+#confirmationToastMessage{
+
+}
+
+
+.btn {
+  position: relative;
+  display: block;
+  width: 250px;
+  margin: 20px auto;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  color: #000;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transform-style: flat;
+  transition: all 250ms ease-out;
+}
+.btn:before, .btn:after {
+  content: "";
+  position: absolute;
+  z-index: -2;
+  transition: all 250ms ease-out;
+}
+
+/* Paper effect – slightly raised off background */
+.paper {
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(128, 128, 128, 0.1) inset;
+  border-color: #dedede;
+}
+
+/* Raised effect – pushes up on hover */
+.paper-raise:before {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.paper-raise:hover {
+
+}
+.paper-raise:hover:before {
+  box-shadow: 0 15px 15px -10px rgba(31, 31, 31, 0.5);
+}
+
+#confirmationToastYes{
+    margin-top: 2rem;
+    position: relative;
+    width: 100%;
+    background-color: #ff3366;
+
+}
+
+
+#confirmationToastNo{
+  position: relative;
+  width: 100%;
+
+}
+
+#confirmationToast.notify{
+  visibility: visible;
+  -webkit-transform: translateY(-112px);
+  transform: translateY(-112px);
+}
